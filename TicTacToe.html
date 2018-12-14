@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic-Tac-Toe</title>
+    <meta charset="UTF-8">
+    <script src="p5.js"></script>
+    <script src="p5.sound.js"></script>
+</head>
+<body onload="startGame()">
+
+
+
+<h1>Tic-Tac-Toe</h1>
+<h2>Use the buttons below to choose your type of game!</h2>
+<p>Choose the style of your board:</p>
+<button type="button" onclick="window.location.href='http://www.unm.edu/~toriamm/TicTacToe.html'">3x3 Board</button>  <button type="button" onclick="window.location.href='http://www.unm.edu/~toriamm/Four%20In%20A%20Row.html'">4x4 Board</button>
+<br><br>
+
+<script>
+
+  var canvasWidth = 1000;
+  var canvasHeight = 1000;
+
+  var playerTurn = 0;
+  var boardSize3 = 3;
+
+  var symbols = ['X', 'O'];
+
+  var tiles = [];
+  var tileSize = canvasHeight/10;
+
+  var board0 = [];
+  var board1 = [];
+  var board2 = [];
+
+  var gameOver = false;
+
+  var tieGame = 26;
+
+  var boardList3 = [board0, board1, board2];
+
+
+  //==================================================================
+  //==================================================================
+
+  function startGame()
+  {
+      myMusic = new sound("Silk and Silver.mp3");
+      myMusic.play();
+  }
+
+  function checkWinThree()
+  {
+    for(i = 0; i < tiles.length; i++)
+    {
+        //board2 (last) columns
+        checkWinOf3Spots(0, 1, 2);
+        checkWinOf3Spots(3, 4, 5);
+        checkWinOf3Spots(6, 7, 8);
+
+        //board2 (last) rows
+        checkWinOf3Spots(0, 3, 6);
+        checkWinOf3Spots(1, 4, 7);
+        checkWinOf3Spots(2, 5, 8);
+
+        //board2 (last) cross
+        checkWinOf3Spots(0, 4, 8);
+        checkWinOf3Spots(2, 4, 6);
+
+        //board1 (mid) columns
+        checkWinOf3Spots(9, 10, 11);
+        checkWinOf3Spots(15, 16, 17);
+
+        //board1 (mid) rows
+        checkWinOf3Spots(9, 12, 15);
+        checkWinOf3Spots(11, 14, 17);
+
+        //board0 (first) columns
+        checkWinOf3Spots(18, 19, 20);
+        checkWinOf3Spots(21, 22, 23);
+        checkWinOf3Spots(24, 25, 26);
+
+        //board0 (first) rows
+        checkWinOf3Spots(18, 21, 24);
+        checkWinOf3Spots(19, 22, 25);
+        checkWinOf3Spots(20, 23, 26);
+
+        //board0 (first) cross
+        checkWinOf3Spots(18, 22, 26);
+        checkWinOf3Spots(20, 22, 24);
+
+        //through 3 columns
+        checkWinOf3Spots(0, 9, 18);
+        checkWinOf3Spots(1, 10, 19);
+        checkWinOf3Spots(2, 11, 20);
+        checkWinOf3Spots(3, 12, 21);
+        //cannot have middle column
+        checkWinOf3Spots(5, 14, 23);
+        checkWinOf3Spots(6, 15, 24);
+        checkWinOf3Spots(7, 16, 25);
+        checkWinOf3Spots(8, 17, 26);
+
+        //through 3 column cross
+        checkWinOf3Spots(0, 10, 20);
+        checkWinOf3Spots(2, 10, 18);
+        checkWinOf3Spots(6, 16, 26);
+        checkWinOf3Spots(8, 16, 24);
+
+        //through 3 row cross
+        checkWinOf3Spots(0, 12, 24);
+        checkWinOf3Spots(2, 14, 26);
+        checkWinOf3Spots(6, 12, 18);
+        checkWinOf3Spots(8, 14, 20);
+    }
+  }
+
+
+  //==================================================================
+  //====================================================================
+  function checkWinOf3Spots(a, b, c)
+  {
+
+      if ((tiles[a].label != "") && (tiles[a].label === tiles[b].label) && (tiles[a].label === tiles[c].label))
+      {
+        console.log(tiles[a].label + " has won!", 100, 100);
+        console.log("tiles: " + a + ", " + b + ", " + c, 100, 100);
+
+          tiles[a].partOfAWin = true;
+          tiles[b].partOfAWin = true;
+          tiles[c].partOfAWin = true;
+
+        gameOver = true;
+
+        tieGame = 0;
+      }
+
+  }
+
+
+  //==================================================================
+  //==================================================================
+  var Tile = function(x, y)
+  {
+    this.x = x;
+    this.y = y;
+    this.label = "";
+    this.partOfAWin = false;
+  };
+
+
+  //==================================================================
+  //==================================================================
+  Tile.prototype.draw = function()
+  {
+    if (this.label === "space")
+    {
+        fill(255, 255, 255);
+        stroke(255, 255, 255);
+        strokeWeight(2);
+        rect(this.x, this.y, tileSize, tileSize);
+    }
+
+    else
+    {
+        fill(211, 211, 211);
+        strokeWeight(2);
+        rect(this.x, this.y, tileSize, tileSize, 10);
+        textSize(88);
+        textAlign(CENTER, CENTER);
+
+        //coloring a win in highlighter yellow
+        if (this.partOfAWin) fill(251, 255, 0);
+
+        else fill(0, 0, 0);
+
+        text(this.label, this.x + tileSize/2, this.y + tileSize/2);
+    }
+  };
+
+
+
+  //==================================================================
+  //This function has no side effects.
+  //What it does is return a true or false value.
+  //It returns true if and only if this tile's label is empty.
+  //==================================================================
+  Tile.prototype.empty = function()
+  {
+    return this.label === "";
+  };
+
+
+  //==================================================================
+  //==================================================================
+  Tile.prototype.onClick = function()
+  {
+    // If the tile is not empty, exit the function
+    if (!this.empty()) {return false;}
+
+    // Put the player's symbol on the tile
+    this.label = symbols[playerTurn];
+
+    // Change the turn
+    playerTurn = (playerTurn + 1) % 2;
+    return true;
+  };
+
+
+  //==================================================================
+  //==================================================================
+  Tile.prototype.handleMouseClick = function(x, y)
+  {
+    // Check for mouse clicks inside the tile
+    if (x >= this.x && x <=this.x + tileSize && y >= this.y && y <=this.y + tileSize)
+    {
+       return this.onClick();
+    }
+    return false;
+  };
+
+
+  //==================================================================
+  //==================================================================
+  function drawBoards()
+  {
+      drawBoard(board2);
+      drawBoard(board1);
+      drawBoard(board0);
+  }
+
+  function drawBoard(myBoard)
+  {
+      for (var i in myBoard)
+      {
+          myBoard[i].draw();
+      }
+  }
+
+  function aisTurn()
+  {
+      var AImoved = false;
+
+      while (! AImoved)
+      {
+          var AImovesIndex = Math.floor(Math.random() * 9);
+
+          AImoved = board0[AImovesIndex].onClick();
+          if (AImoved) break;
+          AImoved = board1[AImovesIndex].onClick();
+          if (AImoved) break;
+          AImoved = board2[AImovesIndex].onClick();
+          if (AImoved) break;
+      }
+  }
+
+  //==================================================================
+  //==================================================================
+  function mouseReleased()
+  {
+    //for (var i=0; i<tiles.length; i++)
+    for (var i in board0)
+    {
+      var playerMoved = board0[i].handleMouseClick(mouseX, mouseY);
+
+      console.log("playerMoved = " + playerMoved);
+
+        checkWinThree();
+
+      if(playerMoved)
+      {
+          aisTurn();
+          return;
+      }
+    }
+
+    for (i in board1)
+    {
+        playerMoved = board1[i].handleMouseClick(mouseX, mouseY);
+
+        checkWinThree();
+
+        if(playerMoved)
+        {
+            aisTurn();
+            return;
+        }
+    }
+
+    for (i in board2)
+    {
+        playerMoved = board2[i].handleMouseClick(mouseX, mouseY);
+
+        checkWinThree();
+
+        if(playerMoved)
+        {
+            aisTurn();
+            return;
+        }
+    }
+  }
+
+
+
+
+
+    //====================================================
+    // setup()
+    //     Called when the page is loaded or refreshed.
+    //
+    // Board is created and pushed into the array in this structure:
+    //        0  # 3  # 6
+    //        ############
+    //        1  # 4  # 7
+    //        ############
+    //        2  # 5  # 8
+    //====================================================
+    function setup()
+    {
+      backGroundColor = color(255, 255, 255);
+
+      var canvas = createCanvas(canvasWidth, canvasHeight);
+
+      for (var i = 0; i < boardSize3; i++)
+      {
+          for (var j = 0; j < boardSize3; j++)
+          {
+              var x = i * tileSize + 550;
+              var y = j * tileSize + 350;
+
+              var tile = new Tile(x, y);
+              board2.push(tile);
+              tiles.push(tile);
+          }
+      }
+
+      for (i = 0; i < boardSize3; i++)
+      {
+          for (j = 0; j < boardSize3; j++)
+          {
+              x = i * tileSize + 275;
+              y = j * tileSize + 175;
+
+              tile = new Tile(x, y);
+              board1.push(tile);
+              tiles.push(tile);
+          }
+      }
+
+      //create a space
+      //board1[4].label = "space";
+      tiles[13].label = "space";
+
+      for (i = 0; i < boardSize3; i++)
+      {
+          for (j = 0; j < boardSize3; j++)
+          {
+              x = i * tileSize;
+              y = j * tileSize;
+
+              tile = new Tile(x, y);
+              board0.push(tile);
+              tiles.push(tile);
+          }
+      }
+
+
+
+    }
+
+
+
+
+    //===================================================
+    // draw()
+    // Called after setup() and 60 times per second.
+    //===================================================
+    function draw()
+    {
+      background(255, 255, 255);
+      drawBoards();
+
+      if(gameOver === true)
+      {
+          backGroundColor.setAlpha(72);
+          fill(backGroundColor);
+          rect(10, 10, canvasWidth, canvasHeight);
+          fill(32, 128, 255);
+          textSize(54);
+          textAlign(CENTER);
+          text("has won!!!", 500, 200);
+      }
+    }
+
+  function sound(src)
+  {
+      this.sound = document.createElement("audio");
+      this.sound.src = src;
+      this.sound.setAttribute("preload", "auto");
+      this.sound.setAttribute("controls", "none");
+      this.sound.setAttribute("loop", "none");
+      this.sound.style.display = "none";
+      document.body.appendChild(this.sound);
+
+      this.play = function()
+      {
+          this.sound.play();
+      }
+  }
+
+    function reset()
+    {
+        tieGame = 26;
+        gameOver = false;
+        drawBoards;
+    }
+
+</script>
+</body>
+</html>

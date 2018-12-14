@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+    .head
+    {
+        font-family: 'Lucida Bright', cursive;
+        text-align: center;
+        font-size: 80px;
+        color: red;
+        font-weight: bold;
+    }
+
+    .center
+    {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    p
+    {
+        font: 32px "Lucida Handwriting", sans-serif;
+        text-align: center;
+        color: #f8a0f8;
+    }
+
+    #start-select
+    {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: 100;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%,-50%);
+    }
+
+    #start-select div
+    {
+        position: fixed;
+        display: flex;
+        left: 50%;
+        top: 55%;
+        transform: translate(-50%,-50%);
+        width: 700px;
+        height: 1000px;
+        border-radius: 35px;
+        background-color: white;
+        box-shadow: 1px 1px 60px 30px white;
+    }
+
+    #start-select div div
+    {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    #start-select div div h3
+    {
+        margin: auto;
+        text-align: center;
+        color: black;
+        width: 100%;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font: 40px "Lucida Bright", sans-serif;
+        font-weight: bold;
+    }
+
+    #start-select div div button
+    {
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font: 40px "Lucida Bright", sans-serif;
+        font-weight: bolder;
+        background-color: red;
+        border-radius: 16px;
+        margin: 2px;
+        padding: 5px;
+        height: 90px;
+        min-width: 55px;
+        width: 70%;
+        border: none;
+        -webkit-transition: background-color 500ms;
+        transition: background-color 500ms;
+    }
+
+    #start-select div div button:hover
+    {
+        background-color: #ff3763;
+        box-shadow: 2px 2px 12px 2px #ff0000;
+        cursor: pointer; cursor: hand;
+        -webkit-transition: background-color 300ms;
+        transition: background-color 300ms;
+    }
+
+    #start-select div div button.active
+    {
+        border: 2px solid;
+        background-color: #ff1d46;
+        padding: 13px;
+        -webkit-transition: background-color 500ms;
+        transition: background-color 500ms;
+    }
+
+    .win-display
+    {
+
+        opacity: 0.7 ;
+    }
+
+    #start-select div div input.radio
+    {
+        font-size: 40px;
+        font-weight: bolder;
+        background-color: red;
+        margin: 24px;
+        padding: 5px;
+        height: 90px;
+        width: 20%;
+        -webkit-transition: background-color 500ms;
+        transition: background-color 500ms;
+    }
+
+    #start-select div div input.radio:hover
+    {
+        box-shadow: 1px 1px 25px #ff0000;
+        cursor: pointer; cursor: grab;
+        -webkit-transition: background-color 300ms;
+        transition: background-color 300ms;
+    }
+
+    #start-select div div h4
+    {
+        margin: auto;
+        text-align: center;
+        color: black;
+        width: 10%;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font: 32px "Lucida Bright", sans-serif;
+        font-weight: bold;
+    }
+
+    .resetting
+    {
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font: 40px "Lucida Bright", sans-serif;
+        font-weight: bolder;
+        background-color: red;
+        border-radius: 16px;
+        margin: 2px;
+        padding: 5px;
+        height: 90px;
+        min-width: 55px;
+        width: 40%;
+        border: none;
+        justify: center;
+        -webkit-transition: background-color 500ms;
+        transition: background-color 500ms;
+    }
+
+    .resetting:hover
+    {
+        background-color: #ff3763;
+        box-shadow: 2px 2px 12px 2px #ff0000;
+        cursor: pointer; cursor: hand;
+        -webkit-transition: background-color 300ms;
+        transition: background-color 300ms;
+    }
+
+</style>
+
+<head>
+    <title>Ex's and Oh's</title>
+    <meta charset="UTF-8">
+    <script src="p5.js"></script>
+    <script src="p5.sound.js"></script>
+</head>
+
+<body onload="playMusic()" style="background-color:black;">
+
+<section id="start-select">
+    <div>
+        <div>
+            <h3>Pick your board</h3>
+            <!--<form>-->
+            <input id="3x3" type="image" src="3x3 grid.png"  width="200" height="200" onclick="window.location.href='http://www.unm.edu/~toriamm/Ex\'s%20and%20Oh\'s%203x3.html'"/>
+            <input type="image" src="blank.png"  width="50" height="200"/>
+            <input id="4x4" type="image" src="4x4 grid.png"  width="200" height="200" onclick="window.location.href='http://www.unm.edu/~toriamm/Ex\'s%20and%20Oh\'s%204x4.html'"/>
+            <!--</form>-->
+
+            <h3>Pick your turn</h3>
+            <input class="radio" type="radio" name="pickingturn" id="radio_PlayFirst" checked><h4>1st</h4>
+            <input class="radio" type="radio" name="pickingturn" id="radio_PlaySecond"><h4>2nd</h4>
+
+            <h3>Are you the:</h3>
+            <h3>Ex      or      Oh?</h3>
+            <!--<form>-->
+            <input id="brokenheart" type="image" src="Broken Heart.png"  width="200" height="200" onclick="setImages('heart')"/>
+            <input type="image" src="blank.png"  width="50" height="200"/>
+            <input id="kisslips" class="active" type="image" src="Kiss Lips.png"  width="200" height="200" onclick="setImages()"/>
+            <br><br>
+            <!--</form>-->
+
+            <br>
+            <button id ="start-btn" onclick="startGame();">Start Game</button>
+        </div>
+    </div>
+</section>
+
+<div class="head">Ex's and Oh's</div>
+
+<div class="center" id="canvas-holder"></div>
+
+<center>
+    <input class="resetting" id="resetButton" type="reset" value="Again" onclick="reset();">
+    <p>Thank you for playing!</p>
+    <p>By: <a href="https://www.unm.edu/~toriamm/home.html" target="_blank">Victoria Martinez</a></p>
+    <p>Thank you to Chuy Ayala for <a href="https://www.youtube.com/watch?v=r8JvrZv468I" target="_blank">the awesome remix of Georges Bizet's <cite>Carmen Habenara</cite>!</a></p>
+</center>
+
+<br><br>
+
+<script>
+
+  var canvasWidth = 1000;
+  var canvasHeight = 1000;
+
+  var radio_PlayFirst = document.getElementById("radio_PlayFirst");
+  var radio_PlaySecond = document.getElementById("radio_PlaySecond");
+
+  var symbols = ['X', 'O'];
+
+  var heartImage = document.getElementById("brokenheart");
+  var kissImage = document.getElementById("kisslips");
+
+  var tileImage = [heartImage, kissImage, null];
+
+  var heartWinImageList =
+      [
+          "Broken Heart Pink.png",
+          "Broken Heart Yellow.png",
+          "Broken Heart Green.png",
+          "Broken Heart Blue.png",
+          "Broken Heart Purple.png"
+      ];
+
+
+  var heartImagePink = heartWinImageList[0];
+  var heartImageYellow = heartWinImageList[1];
+  var heartImageGreen = heartWinImageList[2];
+  var heartImageBlue = heartWinImageList[3];
+  var heartImagePurple = heartWinImageList[4];
+
+  var kissWinImageList =
+      [
+          "Kiss Lips Pink.png",
+          "Kiss Lips Yellow.png",
+          "Kiss Lips Green.png",
+          "Kiss Lips Blue.png",
+          "Kiss Lips Purple.png"
+      ];
+
+
+  var kissImagePink = kissWinImageList[0];
+  var kissImageYellow = kissWinImageList[1];
+  var kissImageGreen = kissWinImageList[2];
+  var kissImageBlue = kissWinImageList[3];
+  var kissImagePurple = kissWinImageList[4];
+
+  var winImage;
+  var loseImage;
+
+  var playerTurn = 0;
+  var boardSize3 = 3;
+
+  var tiles = [];
+  var tileSize = canvasHeight/10;
+
+  var board0 = [];
+  var board1 = [];
+  var board2 = [];
+
+  var gameOver = false;
+
+  var tieGame = 26;
+
+  var gameStart = false;
+
+  var boardList3 = [board0, board1, board2];
+
+  //==================================================================
+  //==================================================================
+
+  function preload()
+  {
+      //load all heart images
+      tileImage[0] = heartImage = loadImage("Broken Heart.png");
+      heartWinImageList[0] = heartImagePink = loadImage("Broken Heart Pink.png");
+      heartWinImageList[1] = heartImageYellow = loadImage("Broken Heart Yellow.png");
+      heartWinImageList[2] = heartImageGreen = loadImage("Broken Heart Green.png");
+      heartWinImageList[3] = heartImageBlue = loadImage("Broken Heart Blue.png");
+      heartWinImageList[4] = heartImagePurple = loadImage("Broken Heart Purple.png");
+
+      //load all kiss images
+      tileImage[1] = kissImage = loadImage("Kiss Lips.png");
+      kissWinImageList[0] = kissImagePink = loadImage("Kiss Lips Pink.png");
+      kissWinImageList[1] = kissImageYellow = loadImage("Kiss Lips Yellow.png");
+      kissWinImageList[2] = kissImageGreen = loadImage("Kiss Lips Green.png");
+      kissWinImageList[3] = kissImageBlue = loadImage("Kiss Lips Blue.png");
+      kissWinImageList[4] = kissImagePurple = loadImage("Kiss Lips Purple.png");
+
+      tileImage[2] = loadImage("blank.png")
+
+      winImage = loadImage("You Won.jpg");
+      //image.src = "You Won.jpg";
+
+      loseImage = loadImage("Game Over Heart.jpg");
+      //image.src = "Game Over Heart.jpg";
+  }
+
+  //==================================================================
+  //==================================================================
+
+  function playMusic()
+  {
+      myMusic = new sound("Carmen (Habanera) Remix.mp3");
+      myMusic.play();
+  }
+
+
+  function pickTurn()
+  {
+      if (document.getElementById("1st").className === "active")
+      {
+          document.getElementById("2nd").className = "";
+          playerTurn = 0;
+          console.log("Player turn from inside setting: " + playerTurn);
+      }
+      if (document.getElementById("2nd").className === "active")
+      {
+          document.getElementById("1st").className = "";
+          playerTurn = 1;
+          console.log("Player turn from inside setting: " + playerTurn);
+      }
+  }
+
+  var playerImage;
+  var aiImage;
+  function setImages(img)
+  {
+      console.log("setImages");
+
+      if (img == 'heart' && document.getElementById("radio_PlaySecond").checked)
+      {
+          // tileImage[playerTurn] = heartImage;
+          // tileImage[(playerTurn + 1) % 2] = kissImage;
+          playerTurn += 1;
+      }
+      else if (img != 'heart' && document.getElementById("radio_PlayFirst").checked)
+      {
+          // tileImage[playerTurn] = kissImage;
+          // tileImage[(playerTurn + 1) % 2] = heartImage;
+          playerTurn += 1;
+      }
+  }
+
+  //============================================================
+  //============================================================
+
+
+  function startGame() {
+      gameStart = true;
+      document.getElementById('start-select').style.display = 'none';
+      //document.getElementById('header').style.opacity = '';
+      //document.getElementById('main-section').style.opacity = '';
+
+      if (radio_PlayFirst.checked)
+      {
+          console.log("radio_PlayFirst is checked");
+      }
+
+      else if (radio_PlaySecond.checked)
+      {
+          console.log("radio_PlaySecond is checked");
+          aisTurn();
+          console.log("I tried to call the AI, did I work?");
+      }
+  }
+
+  //==================================================================
+  //====================================================================
+  function checkWinOf3Spots(a, b, c)
+  {
+
+      if ((tiles[a].label != "") && (tiles[a].label === tiles[b].label) && (tiles[a].label === tiles[c].label))
+      {
+          console.log(tiles[a].label.toString() + " has won!");
+          console.log("tiles: " + a + ", " + b + ", " + c);
+
+          tiles[a].partOfAWin = true;
+          tiles[b].partOfAWin = true;
+          tiles[c].partOfAWin = true;
+
+          gameOver = true;
+
+          tieGame = 0;
+      }
+
+  }
+
+  //==================================================================
+  //==================================================================
+  function checkWinThree()
+  {
+      //board2 (last) columns
+      checkWinOf3Spots(0, 1, 2);
+      checkWinOf3Spots(3, 4, 5);
+      checkWinOf3Spots(6, 7, 8);
+
+      //board2 (last) rows
+      checkWinOf3Spots(0, 3, 6);
+      checkWinOf3Spots(1, 4, 7);
+      checkWinOf3Spots(2, 5, 8);
+
+      //board2 (last) cross
+      checkWinOf3Spots(0, 4, 8);
+      checkWinOf3Spots(2, 4, 6);
+
+      //board1 (mid) columns
+      checkWinOf3Spots(9, 10, 11);
+      checkWinOf3Spots(15, 16, 17);
+
+      //board1 (mid) rows
+      checkWinOf3Spots(9, 12, 15);
+      checkWinOf3Spots(11, 14, 17);
+
+      //board0 (first) columns
+      checkWinOf3Spots(18, 19, 20);
+      checkWinOf3Spots(21, 22, 23);
+      checkWinOf3Spots(24, 25, 26);
+
+      //board0 (first) rows
+      checkWinOf3Spots(18, 21, 24);
+      checkWinOf3Spots(19, 22, 25);
+      checkWinOf3Spots(20, 23, 26);
+
+      //board0 (first) cross
+      checkWinOf3Spots(18, 22, 26);
+      checkWinOf3Spots(20, 22, 24);
+
+      //through 3 columns
+      checkWinOf3Spots(0, 9, 18);
+      checkWinOf3Spots(1, 10, 19);
+      checkWinOf3Spots(2, 11, 20);
+      checkWinOf3Spots(3, 12, 21);
+      //cannot have middle column
+      checkWinOf3Spots(5, 14, 23);
+      checkWinOf3Spots(6, 15, 24);
+      checkWinOf3Spots(7, 16, 25);
+      checkWinOf3Spots(8, 17, 26);
+
+      //through 3 column cross
+      checkWinOf3Spots(0, 10, 20);
+      checkWinOf3Spots(2, 10, 18);
+      checkWinOf3Spots(6, 16, 26);
+      checkWinOf3Spots(8, 16, 24);
+
+      //through 3 row cross
+      checkWinOf3Spots(0, 12, 24);
+      checkWinOf3Spots(2, 14, 26);
+      checkWinOf3Spots(6, 12, 18);
+      checkWinOf3Spots(8, 14, 20);
+  }
+
+  //==================================================================
+  //==================================================================
+  var Tile = function(x, y)
+  {
+    this.x = x;
+    this.y = y;
+    this.label = "";
+    this.image = tileImage[2];
+    this.partOfAWin = false;
+  };
+
+
+  //==================================================================
+  //==================================================================
+  Tile.prototype.draw = function()
+  {
+    if (this.label === "space")
+    {
+        fill(0, 0, 0);
+        stroke(0, 0, 0);
+        strokeWeight(6);
+        rect(this.x, this.y, tileSize, tileSize);
+    }
+
+    else
+    {
+        fill(255, 255, 255);
+        stroke(0, 0, 0);
+        strokeWeight(6);
+        rect(this.x, this.y, tileSize, tileSize, 10);
+
+        //coloring a win
+        if (this.partOfAWin)
+        {
+            if (this.label == 'X')
+            {
+                var winImgH = random(heartWinImageList);
+                image(winImgH, this.x + tileSize/10, this.y + tileSize/10, 80, 80);
+            }
+
+            if (this.label == 'O')
+            {
+                var winImgK = random(kissWinImageList);
+                image(winImgK, this.x + tileSize/10, this.y + tileSize/10, 80, 80);
+            }
+        }
+
+        else image(this.image, this.x + tileSize/10, this.y + tileSize/10, 80, 80);
+        //image(this.label, this.x + tileSize/10, this.y + tileSize/8, 80, 80);
+    }
+  };
+
+
+
+  //==================================================================
+  //This function has no side effects.
+  //What it does is return a true or false value.
+  //It returns true if and only if this tile's label is empty.
+  //==================================================================
+  Tile.prototype.empty = function()
+  {
+    return this.label === "";
+  };
+
+
+  //==================================================================
+  //==================================================================
+  Tile.prototype.onClick = function()
+  {
+    // If the tile is not empty, exit the function
+    if (!this.empty()) {return false;}
+
+    // Put the player's symbol on the tile
+    this.label = symbols[playerTurn];
+    this.image = tileImage[playerTurn];
+
+    // Change the turn
+    playerTurn = (playerTurn + 1) % 2;
+
+    return true;
+  };
+
+
+  //==================================================================
+  //==================================================================
+  Tile.prototype.handleMouseClick = function(x, y)
+  {
+    // Check for mouse clicks inside the tile
+    if (x >= this.x && x <=this.x + tileSize && y >= this.y && y <=this.y + tileSize)
+    {
+       return this.onClick();
+    }
+    return false;
+  };
+
+
+  //==================================================================
+  //==================================================================
+  function drawBoards()
+  {
+      drawBoard(board2);
+      drawBoard(board1);
+      drawBoard(board0);
+  }
+
+  function drawBoard(myBoard)
+  {
+      for (var i in myBoard)
+      {
+          myBoard[i].draw();
+      }
+  }
+
+  function aisTurn()
+  {
+      var aiMoved = false;
+
+      while (!aiMoved)
+      {
+          var aiMovesIndex = Math.floor(Math.random() * 27);
+
+          if (tiles[3].partOfAWin && tiles[4].partOfAWin)
+          {
+              console.log("Does this work?");
+              aiMovesIndex = tiles[5];
+              aiMoved = tiles[aiMovesIndex].onClick();
+          }
+
+          aiMoved = tiles[aiMovesIndex].onClick();
+          if (aiMoved) break;
+      }
+
+      checkWinThree();
+  }
+
+  //==================================================================
+  //==================================================================
+  function mouseReleased()
+  {
+      if(gameOver) return;
+      if(!gameStart) return;
+      //for (var i=0; i<tiles.length; i++)
+      for (var i in board0)
+      {
+        var playerMoved = board0[i].handleMouseClick(mouseX, mouseY);
+
+        console.log("playerMoved = " + playerMoved);
+
+          checkWinThree();
+
+        if(playerMoved)
+        {
+            aisTurn();
+            return;
+        }
+      }
+
+      for (i in board1)
+      {
+          playerMoved = board1[i].handleMouseClick(mouseX, mouseY);
+
+          checkWinThree();
+
+          if(playerMoved)
+          {
+              aisTurn();
+              return;
+          }
+      }
+
+      for (i in board2)
+      {
+          playerMoved = board2[i].handleMouseClick(mouseX, mouseY);
+
+          checkWinThree();
+
+          if(playerMoved)
+          {
+              aisTurn();
+              return;
+          }
+      }
+  }
+
+
+
+
+
+    //====================================================
+    // setup()
+    //     Called when the page is loaded or refreshed.
+    //
+    // Board is created and pushed into the array in this structure:
+    //        0  # 3  # 6
+    //        ############
+    //        1  # 4  # 7
+    //        ############
+    //        2  # 5  # 8
+    //====================================================
+    function setup()
+    {
+        var canvas = createCanvas(canvasWidth, canvasHeight);
+        canvas.parent('canvas-holder');
+
+        for (var i = 0; i < boardSize3; i++)
+        {
+            for (var j = 0; j < boardSize3; j++)
+            {
+                var x = i * tileSize + 590;
+                var y = j * tileSize + 430;
+
+                var tile = new Tile(x, y);
+                board2.push(tile);
+                tiles.push(tile);
+            }
+        }
+
+        for (i = 0; i < boardSize3; i++)
+        {
+            for (j = 0; j < boardSize3; j++)
+            {
+                x = i * tileSize + 315;
+                y = j * tileSize + 255;
+
+                tile = new Tile(x, y);
+                board1.push(tile);
+                tiles.push(tile);
+            }
+        }
+
+        //create a space
+        tiles[13].label = "space";
+
+        for (i = 0; i < boardSize3; i++)
+        {
+            for (j = 0; j < boardSize3; j++)
+            {
+                x = i * tileSize + 40;
+                y = j * tileSize + 80;
+
+                tile = new Tile(x, y);
+                board0.push(tile);
+                tiles.push(tile);
+            }
+        }
+
+        console.log("playerturn = " + playerTurn);
+        if(playerTurn === 1)
+        {
+            playerTurn = 0;
+            aisTurn();
+            console.log("I tried to call the AI, did I work?");
+        }
+
+    }
+
+    //===================================================
+    // draw()
+    // Called after setup() and 60 times per second.
+    //===================================================
+    function draw()
+    {
+        background(0, 0, 0);
+        drawBoards();
+    }
+
+  function sound(src)
+  {
+      this.sound = document.createElement("audio");
+      this.sound.src = src;
+      this.sound.setAttribute("preload", "auto");
+      this.sound.setAttribute("controls", "none");
+      this.sound.setAttribute("loop", "none");
+      this.sound.style.display = "none";
+      document.body.appendChild(this.sound);
+
+      this.play = function()
+      {
+          this.sound.play();
+      }
+  }
+
+    function reset()
+    {
+        console.log("Am I being contacted?")
+        location.reload();
+    }
+
+</script>
+</body>
+</html>

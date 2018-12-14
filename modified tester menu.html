@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>modifying stuff is hard...</title>
+</head>
+
+<style>
+
+    #start-select {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: 100;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%,-50%);
+    }
+
+    #start-select div {
+        position: fixed;
+        display: flex;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 350px;
+        height: 370px;
+        border-radius: 35px;
+        background-color: white;
+        box-shadow: 5px 5px 15px 10px whitesmoke;
+    }
+
+    #start-select div div {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    #start-select div div h3 {
+        margin: auto;
+        text-align: center;
+        color: black;
+        width: 100%;
+    }
+
+    #start-select div div button {
+        background-color: red;
+        border-radius: 8px;
+        margin: 3px;
+        padding: 15px;
+        height: 50px;
+        min-width: 55px;
+        width: 80%;
+        border: none;
+        -webkit-transition: background-color 500ms; /* Safari */
+        transition: background-color 500ms;
+    }
+
+    #start-select div div button:hover {
+        background-color: #ff3763;
+        box-shadow: 0.5px 0.5px 5px #ff0000;
+        cursor: pointer; cursor: hand;
+        -webkit-transition: background-color 300ms; /* Safari */
+        transition: background-color 300ms;
+    }
+
+    #start-select div div button.active {
+        border: 2px solid;
+        background-color: #ff1d46;
+        padding: 13px;
+        -webkit-transition: background-color 500ms; /* Safari */
+        transition: background-color 500ms;
+    }
+
+    #emoji-outer-div {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    #emoji {
+        width: 100px;
+        height: 100px;
+    }
+
+    #emoji img {
+        height: 100%;
+    }
+
+    #emoji-text {
+        flex: 1;
+        text-align: center;
+        color: white;
+        margin: 0 30px;
+        font-size: 20px;
+    }
+
+    @media screen and (max-width: 530px) {
+        body {
+            margin: 10px auto;
+            padding: 5px;
+        }
+
+        header {
+            margin: auto;
+            max-width: 400px;
+        }
+
+        #emoji-text {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+
+        #emoji {
+            height: 65px;
+            width: 65px;
+        }
+    }
+
+</style>
+
+<body>
+
+<section id="start-select">
+    <div>
+        <div>
+            <h3>Pick your turn</h3>
+            <button id="1st" class="active" onclick="pickTurn(true);" style='font-size: 14px;'>1st</button><button id="2nd" onclick="pickTurn(false);" style='font-size: 14px;'>2nd</button>
+            <h3>Are you the:</h3>
+            <h3>Ex      or      Oh?</h3>
+            <form>
+                <input id="brokenheart" type="image" src="Broken Heart 40.png"  width="60" height="60" onclick="imageSelected();"/>
+                <input id="kisslips" type="image" src="Kiss Lips 40.png"  width="60" height="60" onclick="imageSelected();"/>
+            </form>
+            <span id="tileSymbols"></span>
+            <br>
+            <button id ="start-btn" onclick="startGame();" style='font-size: 18px;'>Start Game</button>
+        </div>
+    </div>
+</section>
+
+<header id="header" style="opacity:0.9;">
+    <div id="emoji-outer-div">
+        <div id="emoji">
+            <img src="Broken Heart 40.png" id="emoji-img">
+        </div>
+        <div id="emoji-text">
+            <span id="aiTalk">"Hi, I'm Unbeatable-AI<br>Wanna Play Against Me?"</span>
+        </div>
+    </div>
+</header>
+
+</body>
+</html>
